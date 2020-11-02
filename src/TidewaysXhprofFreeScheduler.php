@@ -77,7 +77,8 @@ class TidewaysXhprofFreeScheduler {
 			return;	
 		}
 
-		$logFileName = $logPath . DIRECTORY_SEPARATOR . (new \DateTime())->format('Ymd_His_u') . '.json';
+		$time = split(' ', microtime(false));
+		$logFileName = $logPath . DIRECTORY_SEPARATOR . date('Ymd_His_', $time[0]) . $time[1] . '.json';
 		$data = tideways_xhprof_disable();
 
 		file_put_contents($logFileName, json_encode($data));
