@@ -23,8 +23,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-use DateTime;
-
 namespace koalamer\Tideways;
 
 class TidewaysXhprofFreeScheduler {
@@ -79,7 +77,7 @@ class TidewaysXhprofFreeScheduler {
 			return;	
 		}
 
-		$logFileName = $logPath . DIRECTORY_SEPARATOR . (new DateTime())->format('Ymd_His_u') . '.json';
+		$logFileName = $logPath . DIRECTORY_SEPARATOR . (new \DateTime())->format('Ymd_His_u') . '.json';
 		$data = tideways_xhprof_disable();
 
 		file_put_contents($logFileName, json_encode($data));
