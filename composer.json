@@ -1,7 +1,14 @@
 {
     "name": "koalamer/tideways-xhprof-free-scheduler",
+    "type": "library",
     "description": "A convenience class for integrating the free version of Tideways' Xhprof extension into your code.",
+    "license": "MIT",
     "require": {
-        "php": "^7.0"
+        "php": "^7"
+    },
+    "autoload": {
+        "psr-4": {
+            "koalamer\\Tideways\\": "src/"
+        }
     }
 }

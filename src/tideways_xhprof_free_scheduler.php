@@ -1,5 +1,7 @@
 <?php
 
+namespace koalamer\Tideways;
+
 class TidewaysXhprofFreeScheduler {
 
 	private static $singleton;
