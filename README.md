@@ -55,4 +55,10 @@ TidewaysXhprofFreeScheduler::setSegmentation("4-action","")
 
 will result in a log file path "/tmp/some-hostname/2020-11-03/awesome-module/empty/".
 
-The log file name itself will be the current time in the form of date, time and microsecs like this: "20201103_064423_032472.json".
+### Writing out the log file
+
+The profiling stops when the internal singleton class instance is destroyed, and thus it is automatic.
+
+The log file name itself will be the current time in the form of date, time and microsecs like this: "20201103_064423_032472.json". This json serialization is what the [Tideways toolkit](https://github.com/tideways/toolkit) needs to operate.
+
+The log path directories will be created as needed to house the log file.
