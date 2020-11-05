@@ -14,9 +14,8 @@ use koalamer\Tideways\TidewaysXhprofFreeScheduler;
 
 ### Set how often to start profiling
 
-Setting the value X will result in a 1 in X chance for the profiling to start. Setting it to 1 or smaller results in always starting the profiler.
-
-The default value is 10 000, which shouldn't be a low enough number to not cause atrouble if you forget to set your own value in production.
+Setting the value X will result in a 1 in X chance for the profiling to start. Setting it to less than 1 rwsults in never starting the profiler.
+The default value is 0, which means no profiling.
 
 ```php
 TidewaysXhprofFreeScheduler::setStartingChanceDivisor(100);
@@ -24,10 +23,11 @@ TidewaysXhprofFreeScheduler::setStartingChanceDivisor(100);
 
 ### Start the actual profiling
 
-The init() call will use the starting chance to determine whether to actually start profiling or not. This call can be repeated as many times you want, each time the current starting chance divisor is used to evaluate whether to start profiling or not.
-This means, you can set a lower starting chance globally, and later try a higher starting chance for scripts you know start less often and therefore would otherwise have a low chance to be profiled.
+The init() call will use the current value of the starting chance divisor to determine whether to actually start profiling or not.
 
-Once the profiling has started the call returns without doing anything.
+Once the profiling was started, subsequent calls return without doing anything.
+
+For example: in a single entry point scenario you can set a low starting chance globally, call init(), and later set a higher starting chance for code (module/routine/action) you know run less often, and call init() again. This way you can capture profile information on parts of your code that would otherwise have a low chance of being profiled, but still have a global setting, without the two interfering with eachother.
 
 If the tideways_xhprof extension is not loaded, the call returns false, otherwise true.
 
@@ -59,6 +59,6 @@ will result in a log file path "/tmp/some-hostname/2020-11-03/awesome-module/emp
 
 The profiling stops when the internal singleton class instance is destroyed, and thus it is automatic.
 
-The log file name itself will be the current time in the form of date, time and microsecs like this: "20201103_064423_032472.json". This json serialization is what the [Tideways toolkit](https://github.com/tideways/toolkit) needs to operate.
+The log file name itself will be the current time in the form of date, time and microsecs like this: "20201103_064423_032472.json". This json serialization is what the [Tideways toolkit](https://github.com/tideways/toolkit) needs to operate, that's why it was chosen.
 
 The log path directories will be created as needed to house the log file.

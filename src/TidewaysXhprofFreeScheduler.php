@@ -29,20 +29,24 @@ class TidewaysXhprofFreeScheduler
 {
 
 	private static $singleton;
-	private static $startingChanceDivisor = 10000;
+	private static $startingChanceDivisor = 0;
 	private static $segmentation = [];
 
 	/**
-	 * Starts the profiling. If the starting chance divisor is 1 or smaller, the
-	 * profiling is always started. If this value is above 1, let's say X, then
+	 * Starts the profiling. If the starting chance divisor is less than 1, the
+	 * profiling is not started. If this value is 1 or, let's say X, then
 	 * the profiling is started with a 1 in X chance randomly.
 	 * If the extension is not loaded, the call returns false, otherwise true.
-	 * Multiple calls to init() are allowed, eacj=h call will use the current
-	 * starting chance. If an earlyer call already started the profiling, the
-	 * call returns without doing anything.
+	 * Multiple calls to init() are allowed, each call will evaluate the current
+	 * starting chance divisor parameter anew. If an earlier call already
+	 * started the profiling, the call returns without doing anything.
 	 */
 	public static function init(): bool
 	{
+		if (self::$startingChanceDivisor < 1) {
+			return true;
+		}
+
 		if (!extension_loaded('tideways_xhprof')) {
 			return false;
 		}
@@ -66,9 +70,9 @@ class TidewaysXhprofFreeScheduler
 
 	/**
 	 * Sets the likelyhood ratio with which to start the profiling when init()
-	 * is called. Setting the value X will result in a 1 in X chance to start,
-	 * unless X is 1 or smaller, in which case the profiling is always started.
-	 * If you don't set a value, the default of 10 000 is used.
+	 * is called. Setting the value X will result in a 1 in X chance to start.
+	 * If the set value is smaller than 1, the profiling is neveer started.
+	 * If you don't set a value, the default of 0 is used.
 	 */
 	public static function setStartingChanceDivisor(int $divisor)
 	{
@@ -78,7 +82,7 @@ class TidewaysXhprofFreeScheduler
 	/**
 	 * Sets one level of segmentation for the resulting log file in the form of
 	 * defining one directory level of the logging path.
-	 * There is no default logging path, so you should set call this function at
+	 * There is no default logging path, so you should call this function at
 	 * least once to define the path where the log files should be put.
 	 * The log file path is assembled when the profiling is stopped, so you can
 	 * call this function as many times you want, even after init() was fired.
