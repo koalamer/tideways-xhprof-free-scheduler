@@ -1,8 +1,12 @@
 # tideways-xhprof-free-scheduler
 
-A small helper class to integrate Tideway's Xhprof free edition into your code.
+A small helper class to integrate the free Tideways XHProf Extension edition into your code.
 
 ## How to Use
+
+### Set Up the tideways_xhprof Extension
+
+You can find the source and precompiled packages, as well as installation instructions at [github.com/tideways/php-xhprof-extension](https://github.com/tideways/php-xhprof-extension).
 
 ### Use the class name in your script
 
@@ -59,6 +63,10 @@ will result in a log file path "/tmp/some-hostname/2020-11-03/awesome-module/emp
 
 The profiling stops when the internal singleton class instance is destroyed, and thus it is automatic.
 
-The log file name itself will be the current time in the form of date, time and microsecs like this: "20201103_064423_032472.json". This json serialization is what the [Tideways toolkit](https://github.com/tideways/toolkit) needs to operate, that's why it was chosen.
+The log file name itself will be the current time in the form of date, time and microsecs like this: "20201103_064423_032472.json".
 
 The log path directories will be created as needed to house the log file.
+
+### Reading the Profile Logs
+
+To evaluate the produced logs, use the Tideways Toolkit, which can be found at [github.com/tideways/toolkit](https://github.com/tideways/toolkit).
